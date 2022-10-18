@@ -16,15 +16,14 @@ public class RotateGun : MonoBehaviour
     }
     private void RotationGun()
     {
-        if(transform.eulerAngles.z > 90f)
+        transform.right = -((Vector2)transform.position - GetMousePosition());
+        if (transform.position.x > GetMousePosition().x)
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180f, transform.eulerAngles.z);
-            transform.right = ((Vector2)transform.position - GetMousePosition());
+            transform.localScale = new Vector3(transform.localScale.x, -1f, 1f);
         }
         else
         {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x,0, transform.eulerAngles.z);
-            transform.right = -((Vector2)transform.position - GetMousePosition());
+            transform.localScale = new Vector3(transform.localScale.x, 1f, 1f);
         }
     }
 }
