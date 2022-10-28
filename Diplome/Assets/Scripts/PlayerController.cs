@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(transform.up * playerforcejump);
+            rb.AddForce(new Vector2(0,1f) * playerforcejump);
         }
         if (Input.GetMouseButtonDown(0))
         {

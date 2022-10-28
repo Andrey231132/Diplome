@@ -22,5 +22,4 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     
     public abstract void Die();
-    public abstract void Logic();
 }
