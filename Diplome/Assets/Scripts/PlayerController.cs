@@ -46,10 +46,6 @@ public class PlayerController : MonoBehaviour
         {
             transform.position += new Vector3(playerspeed, 0, 0) * Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(new Vector2(0,1f) * playerforcejump);
-        }
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();

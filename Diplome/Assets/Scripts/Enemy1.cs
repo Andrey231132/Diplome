@@ -10,6 +10,8 @@ public class Enemy1 : BaseEnemy
     private Transform aim;
     [SerializeField]
     private float seeradius;
+    [SerializeField]
+    private Transform player;
 
     private bool isdetected;
 
@@ -20,18 +22,18 @@ public class Enemy1 : BaseEnemy
             if (isdetected)
             {
                 Shoot();
-                yield return new WaitForSeconds(enemy.speedfire);
+                yield return new WaitForSeconds(speedfire);
             }
             yield return null;
         }
     }
     private void Shoot()
     {
-        GameObject bullet = Instantiate(enemy.bullet, aim.position, guncontainer.rotation);
-        bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * enemy.speedbulet);
-        Destroy(bullet, 2f);
+        GameObject _bullet = Instantiate(bullet, aim.position, guncontainer.rotation);
+        _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.up * speedbulet);
+        Destroy(_bullet, 2f);
     }
-    private void RotateEnemy(Transform player)
+    private void RotateGun()
     {
         if(player.position.x > transform.position.x)
         {
@@ -46,13 +48,15 @@ public class Enemy1 : BaseEnemy
     }
     private void CreateCircleCastandCheckIt()
     {
-        Collider2D[] cols = Physics2D.OverlapCircleAll(transform.position, seeradius);
-        foreach(Collider2D col in cols)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 0.7f), -(transform.position + new Vector3(0,0.7f) - player.position), seeradius);
+        if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
         {
-            if(col.gameObject.GetComponent<PlayerController>())
-            {
-                RotateEnemy(col.gameObject.transform);
-            }
+            RotateGun();
+            isdetected = true;
+        }
+        else
+        {
+            isdetected = false;
         }
     }
     private void Start()
@@ -62,13 +66,16 @@ public class Enemy1 : BaseEnemy
     private void Update()
     {
         CreateCircleCastandCheckIt();
+        CheckHealth();
     }
     public override void Die()
     {
-
+        Instantiate(partical, transform.position, Quaternion.identity);
+        Destroy(gameObject);
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, seeradius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position + new Vector3(0, 0.7f), -(transform.position + new Vector3(0, 0.7f) - player.position));
     }
 }
