@@ -10,9 +10,7 @@ public class Enemy1 : BaseEnemy
     private Transform aim;
     [SerializeField]
     private float seeradius;
-    [SerializeField]
-    private Transform player;
-
+   
     private bool isdetected;
 
     private IEnumerator IsDetected()
@@ -33,25 +31,11 @@ public class Enemy1 : BaseEnemy
         _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.up * speedbulet);
         Destroy(_bullet, 2f);
     }
-    private void RotateGun()
+    private void CreateTriggerPlayer()
     {
-        if(player.position.x > transform.position.x)
-        {
-            transform.localScale = new Vector3(1,1,1);
-            guncontainer.transform.right = (player.transform.position - guncontainer.position);
-        }
-        else
-        {
-            transform.localScale = new Vector3(-1, 1, 1);
-            guncontainer.transform.right = -(player.transform.position - guncontainer.position);
-        }
-    }
-    private void CreateCircleCastandCheckIt()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(0, 0.7f), -(transform.position + new Vector3(0,0.7f) - player.position), seeradius);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(3,0), transform.right, seeradius);
         if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
         {
-            RotateGun();
             isdetected = true;
         }
         else
@@ -65,7 +49,7 @@ public class Enemy1 : BaseEnemy
     }
     private void Update()
     {
-        CreateCircleCastandCheckIt();
+        CreateTriggerPlayer();
         CheckHealth();
     }
     public override void Die()
@@ -75,7 +59,6 @@ public class Enemy1 : BaseEnemy
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position + new Vector3(0, 0.7f), -(transform.position + new Vector3(0, 0.7f) - player.position));
+        
     }
 }

@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, gun.rotation);
-        _bullet.GetComponent<Rigidbody2D>().AddForce(_bullet.transform.right * bulletspeed);
+        _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.right * bulletspeed);
         Destroy(_bullet, 3f);
     }
 }
