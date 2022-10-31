@@ -9,20 +9,49 @@ public class Enemy1 : BaseEnemy
     [SerializeField]
     private Transform aim;
     [SerializeField]
+    private Transform lefttrigger;
+    [SerializeField]
+    private Transform righttrigger;
+    [SerializeField]
     private float seeradius;
    
     private bool isdetected;
-
+    private bool isright;
+    private Animator anim;
     private IEnumerator IsDetected()
     {
-        while(true)
+        while (true)
         {
             if (isdetected)
             {
                 Shoot();
+                anim.SetBool("Run", false);
                 yield return new WaitForSeconds(speedfire);
             }
+            else
+            {
+                CheckTriggerPlace();
+            }
             yield return null;
+        }
+    }
+    private void CheckTriggerPlace()
+    {
+        if(!isdetected)
+        {
+            anim.SetBool("Run", true);
+            if(isright)
+            {
+                transform.position += new Vector3(speed,0,0) * Time.deltaTime;
+                transform.eulerAngles = new Vector3(0,0,0);
+                if (transform.position.x >= righttrigger.position.x) { isright = false; }
+            }
+            if(!isright)
+            {
+                transform.position -= new Vector3(speed, 0, 0 )* Time.deltaTime;
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                if (transform.position.x <= lefttrigger.position.x) { isright = true; }
+            }
         }
     }
     private void Shoot()
@@ -33,7 +62,7 @@ public class Enemy1 : BaseEnemy
     }
     private void CreateTriggerPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(3,0), transform.right, seeradius);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1.6f,0), transform.right, seeradius);
         if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
         {
             isdetected = true;
@@ -45,6 +74,7 @@ public class Enemy1 : BaseEnemy
     }
     private void Start()
     {
+        anim = GetComponent<Animator>();
         StartCoroutine(IsDetected());
     }
     private void Update()
@@ -59,6 +89,6 @@ public class Enemy1 : BaseEnemy
     }
     private void OnDrawGizmos()
     {
-        
+        Gizmos.DrawRay(transform.position + new Vector3(1.5f,0,0), transform.right);
     }
 }
