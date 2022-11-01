@@ -17,6 +17,7 @@ public class Enemy1 : BaseEnemy
    
     private bool isdetected;
     private bool isright;
+    private float distance = 1f;
     private Animator anim;
     private IEnumerator IsDetected()
     {
@@ -62,15 +63,27 @@ public class Enemy1 : BaseEnemy
     }
     private void CreateTriggerPlayer()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(1.6f,0), transform.right, seeradius);
-        if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
+        if(transform.eulerAngles.y == 180)
         {
-            isdetected = true;
+            distance = -1.6f;
         }
         else
         {
-            isdetected = false;
+            distance = 1.6f;
         }
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(distance, 0, 0), transform.right, seeradius);
+        foreach(RaycastHit2D hit in hits)
+        {
+            if (hit)
+            {
+                if (hit.collider.gameObject.GetComponent<Rigidbody2D>())
+                {
+                    isdetected = true;
+                    break;
+                }
+                isdetected = false;
+            }
+        }      
     }
     private void Start()
     {
@@ -89,6 +102,6 @@ public class Enemy1 : BaseEnemy
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position + new Vector3(1.5f,0,0), transform.right);
+        Gizmos.DrawRay(transform.position + new Vector3(distance, 0), transform.right * seeradius);
     }
 }

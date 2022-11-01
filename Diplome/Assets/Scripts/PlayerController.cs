@@ -12,10 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float bulletspeed;
     [SerializeField]
-    private int health;
-    [SerializeField]
-    private Slider healthslider;
-    [SerializeField]
     private Transform aim;//gun for bullet
     [SerializeField]
     private Transform gun;
@@ -32,11 +28,6 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CheckPlayerInput();
-        UpdateSlider();
-    }
-    private void UpdateSlider()
-    {
-        healthslider.value = health;
     }
     private void CheckPlayerInput()
     {
