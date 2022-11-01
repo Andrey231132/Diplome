@@ -76,7 +76,7 @@ public class Enemy1 : BaseEnemy
         {
             if (hit)
             {
-                if (hit.collider.gameObject.GetComponent<Rigidbody2D>())
+                if (hit.collider.gameObject.GetComponent<PlayerController>())
                 {
                     isdetected = true;
                     break;
