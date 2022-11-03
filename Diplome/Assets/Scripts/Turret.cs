@@ -5,7 +5,9 @@ using UnityEngine;
 public class Turret : BaseEnemy
 {
     [SerializeField]
-    private float distance;
+    private float distanceY;
+    [SerializeField]
+    private float distanceX;
     [SerializeField]
     private float seeradius;
     [SerializeField]
@@ -52,7 +54,7 @@ public class Turret : BaseEnemy
     private void SpawnSeeRadius()
     {
         direction = player.position - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position,direction, seeradius);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(distanceX, distanceY, 0), direction, seeradius);
         if(hit && hit.collider.gameObject.GetComponent<PlayerController>())
         {
             turretgun.up = direction;
@@ -65,6 +67,6 @@ public class Turret : BaseEnemy
     }
     private void OnDrawGizmos()
     {
-       
+        Gizmos.DrawRay(transform.position + new Vector3(distanceX,distanceY,0), direction * seeradius);
     }
 }

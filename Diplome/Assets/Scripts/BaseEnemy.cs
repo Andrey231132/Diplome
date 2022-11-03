@@ -6,7 +6,6 @@ public abstract class BaseEnemy : MonoBehaviour
 {
     public int health;
     public float speed;
-    public int damage;
     public GameObject bullet;
     public float speedfire;
     public float speedbulet;

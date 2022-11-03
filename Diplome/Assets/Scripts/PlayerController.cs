@@ -14,11 +14,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpforce;
     [SerializeField]
+    private int health;
+    [SerializeField]
     private Transform aim;//gun for bullet
     [SerializeField]
     private Transform gun;
     [SerializeField]
     private GameObject bullet;
+    [SerializeField]
+    private GameObject particle;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -62,13 +66,18 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Run", false);
         }
     }
+    public void GetDamage(int damage)
+    {
+        Instantiate(particle, transform.position, Quaternion.identity);
+        health -= damage;
+    }
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, gun.rotation);
         _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.right * bulletspeed);
         Destroy(_bullet, 3f);
     }
-    private void OnCollisionEnter2D()
+    private void OnCollisionEnter2D(Collision2D col)
     {
         isjump = false;
     }
