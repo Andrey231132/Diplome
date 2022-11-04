@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1 : BaseEnemy
+public class Enemywithknife : BaseEnemy
 {
     [SerializeField]
     private Transform righttrigger;
@@ -10,8 +10,6 @@ public class Enemy1 : BaseEnemy
     private Transform lefttrigger;
     [SerializeField]
     private float seeradius;
-    [SerializeField]
-    private Transform aim;
 
     private bool isdetected;
     private bool isright;
@@ -32,14 +30,13 @@ public class Enemy1 : BaseEnemy
         anim.SetBool("Run", false);
         while (true)
         {
-            Shoot();
+            Atack();
             yield return new WaitForSeconds(speedfire);
         }
     }
-    private void Shoot()
+    private void Atack()
     {
-        GameObject _bullet = Instantiate(bullet, aim.position, Quaternion.identity);
-        _bullet.GetComponent<Rigidbody2D>().AddForce(_bullet.transform.right * speedbulet);
+        Debug.Log("Atack");
     }
     private void CheckTriggerPlace()
     {
@@ -59,7 +56,7 @@ public class Enemy1 : BaseEnemy
                 if (transform.position.x <= lefttrigger.position.x) { isright = true; }
             }
         }
-        else if (!shoot)
+        else if(!shoot)
         {
             StartCoroutine(Detected());
             shoot = true;
