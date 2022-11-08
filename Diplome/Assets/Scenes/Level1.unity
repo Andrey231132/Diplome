@@ -360,6 +360,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_person
       objectReference: {fileID: 0}
+    - target: {fileID: 4314825209135944630, guid: d8fd208fa62512c4c85b56bcffe23365, type: 3}
+      propertyPath: speedfire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314825210085595931, guid: d8fd208fa62512c4c85b56bcffe23365, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314825210085595931, guid: d8fd208fa62512c4c85b56bcffe23365, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314825210085595931, guid: d8fd208fa62512c4c85b56bcffe23365, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 7379874765788003709, guid: d8fd208fa62512c4c85b56bcffe23365, type: 3}
       propertyPath: m_RootOrder
       value: 5

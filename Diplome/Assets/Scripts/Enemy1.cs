@@ -30,7 +30,7 @@ public class Enemy1 : BaseEnemy
     private IEnumerator Detected()
     {
         anim.SetBool("Run", false);
-        while (true)
+        while (isdetected)
         {
             Shoot();
             yield return new WaitForSeconds(speedfire);
@@ -39,7 +39,7 @@ public class Enemy1 : BaseEnemy
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, Quaternion.identity);
-        _bullet.GetComponent<Rigidbody2D>().AddForce(_bullet.transform.right * speedbulet);
+        _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.up * speedbulet);
     }
     private void CheckTriggerPlace()
     {
