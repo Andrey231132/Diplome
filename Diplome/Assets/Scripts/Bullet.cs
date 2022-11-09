@@ -17,4 +17,9 @@ public class Bullet : MonoBehaviour
         Instantiate(particlecollision, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
+    public void ChangeDamage(int newdamage)
+    {
+        damage+=newdamage;
+        Debug.Log(damage);
+    }
 }

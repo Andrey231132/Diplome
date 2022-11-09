@@ -85,4 +85,16 @@ public class PlayerController : MonoBehaviour
     {
         isjump = true;
     }
+    public GameObject GetBullet()
+    {
+        return bullet;
+    }
+    public void ChangeBulletSpeed(float change)
+    {
+        bulletspeed+=change;
+    }
+    public void ChangeHealth(int changehealth)
+    {
+        health += changehealth;
+    }
 }
