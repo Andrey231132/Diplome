@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class shild1 : MonoBehaviour
 {
-    private void OnCollisionEnter2D(Collision2D col)
+    [SerializeField]
+    private float timelive;
+    private void Start()
     {
-        if (col!=null&&col.gameObject.GetComponent<Bullet>())
-        {
-            Destroy(gameObject);
-        }
-    }
+        Destroy(gameObject, timelive);
+    }   
 }
