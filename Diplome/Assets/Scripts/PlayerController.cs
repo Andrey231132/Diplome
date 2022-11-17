@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     private GameObject bullet;
     [SerializeField]
     private GameObject particle;
+    [SerializeField]
+    private Slider slider_health;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -35,6 +37,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         CheckPlayerInput();
+        UpdateSlider();
+    }
+    private void UpdateSlider()
+    {
+        slider_health.value = health;
     }
     private void CheckPlayerInput()
     {

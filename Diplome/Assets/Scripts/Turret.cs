@@ -54,16 +54,21 @@ public class Turret : BaseEnemy
     private void SpawnSeeRadius()
     {
         direction = player.position - transform.position;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(distanceX, distanceY, 0), direction, seeradius);
-        if(hit && hit.collider.gameObject.GetComponent<PlayerController>())
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position + new Vector3(distanceX, distanceY, 0), direction, seeradius);
+        foreach(RaycastHit2D hit in hits)
         {
-            turretgun.up = direction;
-            isdetected = true;
+            if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
+            {
+                turretgun.up = direction;
+                isdetected = true;
+                break;
+            }
+            else
+            {
+                isdetected = false;
+            }
         }
-        else
-        {
-            isdetected = false;
-        }
+        
     }
     private void OnDrawGizmos()
     {

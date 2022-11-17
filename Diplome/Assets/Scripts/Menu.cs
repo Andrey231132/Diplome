@@ -5,12 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
 {
-    private void Play()
+    public void Play()
+    {
+        SceneManager.LoadScene(2);
+    }
+    public void Info()
     {
         SceneManager.LoadScene(1);
     }
-    private void Info()
+    public void _Menu()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(0);
     }
 }

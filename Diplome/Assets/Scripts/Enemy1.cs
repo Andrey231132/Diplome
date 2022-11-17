@@ -29,10 +29,10 @@ public class Enemy1 : BaseEnemy
     }
     private IEnumerator Detected()
     {
-        anim.SetBool("Run", false);
         while (isdetected)
         {
             Shoot();
+            anim.SetBool("Run", false);
             yield return new WaitForSeconds(speedfire);
         }
     }
@@ -58,6 +58,7 @@ public class Enemy1 : BaseEnemy
                 transform.eulerAngles = new Vector3(0, 180, 0);
                 if (transform.position.x <= lefttrigger.position.x) { isright = true; }
             }
+            shoot = false;
         }
         else if (!shoot)
         {
