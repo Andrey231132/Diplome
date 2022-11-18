@@ -8,15 +8,21 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get;private set;}
     private void Awake()
     {
-        if(Instance == null)
+        if(!Instance)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            return;
         }
+        Destroy(this.gameObject);
     }
     public static void NextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+    }
+    public static void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     private void Start()
     {

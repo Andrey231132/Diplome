@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     {
         CheckPlayerInput();
         UpdateSlider();
+        CheckHealth();
     }
     private void UpdateSlider()
     {
@@ -103,5 +104,12 @@ public class PlayerController : MonoBehaviour
     public void ChangeHealth(int changehealth)
     {
         health += changehealth;
+    }
+    private void CheckHealth()
+    {
+        if(health <=0)
+        {
+            GameManager.ReloadLevel();
+        }
     }
 }
