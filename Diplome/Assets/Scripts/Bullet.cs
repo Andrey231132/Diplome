@@ -10,14 +10,9 @@ public class Bullet : MonoBehaviour
     private int damage;//THIS IS BULLET DAMAGE
    
     private float bulletspeed;//THIS IS BULLET SPEED.
-    private Rigidbody2D rb;//THIS IS RIGIBOODY BULLET
     public void SetBulletSpeed(float speed)
     {
         bulletspeed = speed;
-    }
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -30,7 +25,7 @@ public class Bullet : MonoBehaviour
     }
     private void BulletMove()
     {
-        rb.velocity = transform.right * bulletspeed;
+        transform.position += transform.right * bulletspeed;
     }
     private void Update()
     {
