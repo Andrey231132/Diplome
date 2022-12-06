@@ -40,16 +40,7 @@ public class Shrine : MonoBehaviour
     }
     private void ChangeGunSettings(PlayerController player)
     {
-        int random = Random.Range(1,7);
-        switch (random)
-        {
-            case 1: player.GetBullet().GetComponent<Bullet>().ChangeDamage(1);SpawnText("BulletDamage + 1", transform.position); break;
-            case 2: player.GetBullet().GetComponent<Bullet>().ChangeDamage(-1); SpawnText("BulletDamage - 1", transform.position);break;
-            case 3: player.ChangeBulletSpeed(400f);SpawnText("BulletSpeed + 400", transform.position); break;
-            case 4: player.ChangeBulletSpeed(400f); SpawnText("BulletDamage - 400", transform.position); break;
-            case 5: player.ChangeHealth(-1);SpawnText("Health - 1", transform.position); break;
-            case 6: player.ChangeHealth(1);SpawnText("Health + 1", transform.position); break;
-        }      
+              
     }
     private void Update()
     {

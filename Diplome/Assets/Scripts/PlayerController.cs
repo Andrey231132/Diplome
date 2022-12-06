@@ -6,25 +6,21 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    private float playerspeed;
+    private float playerspeed;//PLAYER SPEED MOVE
     [SerializeField]
-    private float playerforcejump;
+    private float jumpforce;//PLAYER JUMP FORCE
     [SerializeField]
-    private float bulletspeed;
+    private float bulletspeed;//THIS SPEED FOR PLAYER BULLET
+   [SerializeField]
+    private int health;//PLAYER HEALTH
     [SerializeField]
-    private float jumpforce;
+    private Transform aim;//PLACE WHERE SPAWN BULLET, WHEN PLAYER SHOOT
     [SerializeField]
-    private int health;
+    private GameObject bullet;//THIS IS GAMEOBJECT OF BULLET FOR SHOOTING
     [SerializeField]
-    private Transform aim;//gun for bullet
+    private GameObject particle;//PARTICLE DAMAGE
     [SerializeField]
-    private Transform gun;
-    [SerializeField]
-    private GameObject bullet;
-    [SerializeField]
-    private GameObject particle;
-    [SerializeField]
-    private Slider slider_health;
+    private Slider slider_health;//SLIDER FOR HEALTH
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -81,8 +77,8 @@ public class PlayerController : MonoBehaviour
     }
     private void Shoot()
     {
-        GameObject _bullet = Instantiate(bullet, aim.position, gun.rotation);
-        _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.right * bulletspeed);
+        GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
+        _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
         Destroy(_bullet, 3f);
     }
     private void OnCollisionEnter2D(Collision2D col)
@@ -96,10 +92,6 @@ public class PlayerController : MonoBehaviour
     public GameObject GetBullet()
     {
         return bullet;
-    }
-    public void ChangeBulletSpeed(float change)
-    {
-        bulletspeed+=change;
     }
     public void ChangeHealth(int changehealth)
     {

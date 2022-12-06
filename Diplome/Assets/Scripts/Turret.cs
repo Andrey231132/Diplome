@@ -48,7 +48,6 @@ public class Turret : BaseEnemy
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, turretgun.rotation);
-        _bullet.GetComponent<Rigidbody2D>().AddForce(aim.transform.up * speedbulet);
         Destroy(_bullet, 2f);
     }
     private void SpawnSeeRadius()
