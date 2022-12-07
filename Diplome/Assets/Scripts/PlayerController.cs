@@ -21,10 +21,16 @@ public class PlayerController : MonoBehaviour
     private GameObject particle;//PARTICLE DAMAGE
     [SerializeField]
     private Slider slider_health;//SLIDER FOR HEALTH
+    [SerializeField]
+    private int bulletreload;//VALUE SHOOT BULLET FOR REALOAD
+    [SerializeField]
+    private float reloadtime;//TIME FOR RELOAD PLAYER
 
     private Rigidbody2D rb;
+    private int bulletshoot; //THAT VALUE CURRENT SHOOT BULLET
     private Animator anim;
     private bool isjump;
+    private bool Iscanshoot  = true;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -35,6 +41,7 @@ public class PlayerController : MonoBehaviour
         CheckPlayerInput();
         UpdateSlider();
         CheckHealth();
+        CheckValueBullet();
     }
     private void UpdateSlider()
     {
@@ -76,10 +83,14 @@ public class PlayerController : MonoBehaviour
         health -= damage;
     }
     private void Shoot()
-    {
-        GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
-        _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
-        Destroy(_bullet, 3f);
+    {   
+        if(Iscanshoot)
+        {
+            GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
+            _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
+            bulletshoot++;
+            Destroy(_bullet, 3f);
+        }
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
@@ -103,5 +114,19 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.ReloadLevel();
         }
+    }
+    private void CheckValueBullet()
+    {
+        if(bulletshoot == bulletreload)
+        {
+            Iscanshoot = false;
+            StartCoroutine(Reload());
+            bulletshoot = 0;
+        }
+    }
+    private IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(reloadtime);
+        Iscanshoot = true;
     }
 }
