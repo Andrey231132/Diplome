@@ -26,7 +26,7 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if(col.gameObject.GetComponent<Bullet>())
         {
-            GetDamage(1);
+            GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
         }
     }
     public abstract void Die();
