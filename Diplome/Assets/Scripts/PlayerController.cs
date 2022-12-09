@@ -25,11 +25,14 @@ public class PlayerController : MonoBehaviour
     private int bulletreload;//VALUE SHOOT BULLET FOR REALOAD
     [SerializeField]
     private float reloadtime;//TIME FOR RELOAD PLAYER
+    [SerializeField]
+    private AudioSource playersoundrun;//JUST PLAYER SOUND -  RUN
 
     private Rigidbody2D rb;
     private int bulletshoot; //THAT VALUE CURRENT SHOOT BULLET
     private Animator anim;
     private bool isjump;
+    private bool isgroundstay;
     private bool Iscanshoot  = true;
     void Start()
     {
@@ -71,11 +74,24 @@ public class PlayerController : MonoBehaviour
         if(x!=0)
         {
             anim.SetBool("Run", true);
+            if(isgroundstay)
+            {
+                playersoundrun.mute = false;
+            }
+            else
+            {
+                playersoundrun.mute = true;
+            }
         }
         else
         {
             anim.SetBool("Run", false);
+            playersoundrun.mute = true;
         }
+    }
+    private void OnCollisionStay2D()
+    {
+        isgroundstay = true;
     }
     public void GetDamage(int damage)
     {
@@ -92,13 +108,15 @@ public class PlayerController : MonoBehaviour
             Destroy(_bullet, 3f);
         }
     }
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnCollisionEnter2D()
     {
         isjump = false;
+        isgroundstay = true;
     }
     private void OnCollisionExit2D()
     {
         isjump = true;
+        isgroundstay = false;
     }
     public GameObject GetBullet()
     {

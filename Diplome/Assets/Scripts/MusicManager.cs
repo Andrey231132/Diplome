@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour { 
-
+   
+    [SerializeField]
     private AudioSource music;
     private void Awake()
     {
-        music = FindObjectOfType<AudioSource>().GetComponent<AudioSource>();
+    
         //Debug.Log(music);
     }
     public void MuteOnMusic()

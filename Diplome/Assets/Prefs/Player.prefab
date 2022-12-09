@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7867077783576253509}
   - component: {fileID: 7867077783576253514}
   - component: {fileID: 7867077783576253515}
-  - component: {fileID: 8315217133237290981}
+  - component: {fileID: 2864985301911558162}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -129,6 +129,7 @@ MonoBehaviour:
   slider_health: {fileID: 0}
   bulletreload: 3
   reloadtime: 1
+  playersoundrun: {fileID: 0}
 --- !u!61 &7867077783576253514
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -176,7 +177,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!82 &8315217133237290981
+--- !u!82 &2864985301911558162
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,7 +192,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
