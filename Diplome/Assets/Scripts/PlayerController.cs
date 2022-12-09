@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
     private float reloadtime;//TIME FOR RELOAD PLAYER
     [SerializeField]
     private AudioSource playersoundrun;//JUST PLAYER SOUND -  RUN
+    [SerializeField]
+    private AudioSource playersoundjump;//JUST PLAYER SOUND -  JUMP
+    [SerializeField]
+    private AudioSource playersoundshoot;//JUST PLAYER SOUND -  SHOOT
+
 
     private Rigidbody2D rb;
     private int bulletshoot; //THAT VALUE CURRENT SHOOT BULLET
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.W) && isjump == false)
         {
             rb.AddForce(transform.up * jumpforce);
+            playersoundjump.Play();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -105,6 +111,7 @@ public class PlayerController : MonoBehaviour
             GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
             _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
             bulletshoot++;
+            playersoundshoot.Play();
             Destroy(_bullet, 3f);
         }
     }
