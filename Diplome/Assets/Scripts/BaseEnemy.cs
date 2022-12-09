@@ -10,6 +10,11 @@ public abstract class BaseEnemy : MonoBehaviour
     public float speedfire;
     public float speedbulet;
     public GameObject partical;
+    private AudioSource audio;
+    private void Start()
+    {
+        Debug.Log(audio);
+    }
     protected void CheckHealth()
     {
         if(health <= 0)
@@ -19,8 +24,10 @@ public abstract class BaseEnemy : MonoBehaviour
     }
     public virtual void GetDamage(int damage)
     {
+        audio = GetComponent<AudioSource>();
         health -= damage;
         Instantiate(partical, transform.position, Quaternion.identity);
+        audio.Play();
     }
     private void OnCollisionEnter2D(Collision2D col)
     {

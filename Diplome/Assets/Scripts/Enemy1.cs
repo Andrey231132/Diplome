@@ -17,6 +17,7 @@ public class Enemy1 : BaseEnemy
     private bool isright;
     private bool shoot;
     private Animator anim;
+    
     private void Start()
     {
         anim = GetComponent<Animator>();

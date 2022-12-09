@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97a95ddc339629540bde690466be01e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerspeed: 0
-  jumpforce: 0
+  playerspeed: 5
+  jumpforce: 200
   bulletspeed: 0.5
   health: 3
   aim: {fileID: 7867077783589824399}

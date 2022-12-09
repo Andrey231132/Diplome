@@ -1804,7 +1804,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &703932579
 MonoBehaviour:
@@ -1818,6 +1818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e546fffc6905a2e44947aa1fee93dc93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  music: {fileID: 1242221727}
 --- !u!1 &803469827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2078,7 +2079,7 @@ RectTransform:
   - {fileID: 913461732}
   - {fileID: 2132540843}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2093,18 +2094,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
-      propertyPath: jumpforce
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
-      propertyPath: bulletspeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
-      propertyPath: playerspeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
       propertyPath: slider_health
       value: 
       objectReference: {fileID: 913461733}
@@ -2112,9 +2101,17 @@ PrefabInstance:
       propertyPath: playerforcejump
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
+      propertyPath: playersound.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
+      propertyPath: playersound.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 0fd5148b8292cdf478c3e6c5e715d980, type: 3}
     - target: {fileID: 7867077783576253510, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7867077783576253510, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2344,7 +2341,7 @@ Transform:
   m_Children:
   - {fileID: 251645084}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511868463
 GameObject:
