@@ -11,11 +11,13 @@ public class Turret : BaseEnemy
     [SerializeField]
     private float seeradius;
     [SerializeField]
-    private Transform player;
+    private Transform player;//WHERE TURRET SHOOT
     [SerializeField]
-    private Transform turretgun;
+    private Transform turretgun;//SPRITE OF GUN
     [SerializeField]
-    private Transform aim;
+    private Transform aim;// PLACE WHERE BULLET SPAWN
+    [SerializeField]
+    private float bulletspeed;//THIS SPEED FOR TURRET BULLET
 
     private Vector2 direction;
     private bool isdetected;
@@ -47,7 +49,8 @@ public class Turret : BaseEnemy
     }
     private void Shoot()
     {
-        GameObject _bullet = Instantiate(bullet, aim.position, turretgun.rotation);
+        GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
+        _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
         Destroy(_bullet, 2f);
     }
     private void SpawnSeeRadius()

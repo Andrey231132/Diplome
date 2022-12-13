@@ -11,7 +11,9 @@ public class Enemy1 : BaseEnemy
     [SerializeField]
     private float seeradius;
     [SerializeField]
-    private Transform aim;
+    private Transform aim;//PLACE WHER BULLET SPAWN
+    [SerializeField]
+    private float bulletspeed;//SPEED BULLET
 
     private bool isdetected;
     private bool isright;
@@ -40,6 +42,7 @@ public class Enemy1 : BaseEnemy
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, Quaternion.identity);
+        _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
     }
     private void CheckTriggerPlace()
     {

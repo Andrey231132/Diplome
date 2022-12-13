@@ -209,6 +209,7 @@ MonoBehaviour:
   lefttrigger: {fileID: 4314825209499683421}
   seeradius: 5
   aim: {fileID: 4314825210085595931}
+  bulletspeed: 0.5
 --- !u!82 &5655740033358633156
 AudioSource:
   m_ObjectHideFlags: 0

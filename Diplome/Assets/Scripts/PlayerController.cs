@@ -129,6 +129,10 @@ public class PlayerController : MonoBehaviour
     {
         return bullet;
     }
+    public void SetHealth(int h)
+    {
+        health+=h;
+    }
     public void ChangeHealth(int changehealth)
     {
         health += changehealth;
