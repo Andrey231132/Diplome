@@ -117,12 +117,10 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D()
     {
-        isjump = false;
         isgroundstay = true;
     }
     private void OnCollisionExit2D()
     {
-        isjump = true;
         isgroundstay = false;
     }
     public GameObject GetBullet()
@@ -132,10 +130,6 @@ public class PlayerController : MonoBehaviour
     public void SetHealth(int h)
     {
         health+=h;
-    }
-    public void ChangeHealth(int changehealth)
-    {
-        health += changehealth;
     }
     private void CheckHealth()
     {
