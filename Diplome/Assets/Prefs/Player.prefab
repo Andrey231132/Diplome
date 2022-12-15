@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerspeed: 5
-  jumpforce: 200
+  jumpforce: 250
   bulletspeed: 0.5
   health: 3
   aim: {fileID: 7867077783589824399}

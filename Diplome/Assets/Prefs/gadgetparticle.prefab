@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3931568916412534991}
   - component: {fileID: 3371484890006105339}
   - component: {fileID: 4131977629508322266}
-  - component: {fileID: 1969076839322961026}
   m_Layer: 0
   m_Name: gadgetparticle
   m_TagString: Untagged
@@ -43,7 +42,7 @@ ParticleSystem:
   serializedVersion: 7
   lengthInSec: 0.5
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -4863,16 +4862,3 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!114 &1969076839322961026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56246410297628954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1e9b0acc83009340903ce6a2c4159b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timedie: 1

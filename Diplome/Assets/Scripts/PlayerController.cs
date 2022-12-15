@@ -133,7 +133,6 @@ public class PlayerController : MonoBehaviour
         {
             return false;
         }
-        Debug.Log(hit);
     }
     public GameObject GetBullet()
     {
