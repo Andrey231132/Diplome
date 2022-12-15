@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private int bulletshoot; //THAT VALUE CURRENT SHOOT BULLET
     private Animator anim;
-    private bool isjump;
     private bool isgroundstay;
     private bool Iscanshoot  = true;
     void Start()
@@ -68,7 +67,7 @@ public class PlayerController : MonoBehaviour
             transform.position += new Vector3(playerspeed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0,0,0);
         }
-        if(Input.GetKeyDown(KeyCode.W) && isjump == false)
+        if(Input.GetKeyDown(KeyCode.W) && IsJump() == true)
         {
             rb.AddForce(transform.up * jumpforce);
             playersoundjump.Play();
@@ -95,10 +94,6 @@ public class PlayerController : MonoBehaviour
             playersoundrun.mute = true;
         }
     }
-    private void OnCollisionStay2D()
-    {
-        isgroundstay = true;
-    }
     public void GetDamage(int damage)
     {
         Instantiate(particle, transform.position, Quaternion.identity);
@@ -122,6 +117,23 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionExit2D()
     {
         isgroundstay = false;
+    }
+    private void OnCollisionStay2D()
+    {
+        isgroundstay = true;
+    }
+    private bool IsJump()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0,1f,0), -Vector2.up, 0.1f);
+        if(hit)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        Debug.Log(hit);
     }
     public GameObject GetBullet()
     {
