@@ -104,7 +104,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!61 &4892258485138898612
 BoxCollider2D:
@@ -146,4 +146,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   particlecollision: {fileID: 5210942250064914071, guid: 3c20531b7f5a2a6479b6683b002d9bac, type: 3}
   damage: 1
-  bulletspeed: 0.6
