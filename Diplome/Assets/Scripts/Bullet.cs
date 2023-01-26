@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
     }
     private void BulletMove()
     {
-        transform.position += transform.right * bulletspeed;
+        transform.position += transform.right * bulletspeed * Time.deltaTime;
     }
     private void Update()
     {
