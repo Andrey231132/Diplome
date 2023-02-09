@@ -49,7 +49,7 @@ public class EnemyWithKnife : BaseEnemy
     {
         if (move)
         {
-            transform.position += new Vector3(speed, 0, 0);
+            transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 0, 0);
             if(transform.position.x >= righttrigger.position.x)
             {
@@ -58,7 +58,7 @@ public class EnemyWithKnife : BaseEnemy
         }
         else
         {
-            transform.position -= new Vector3(speed, 0, 0);
+            transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 180, 0);
             if (transform.position.x <= lefttrigger.position.x)
             {
@@ -71,12 +71,12 @@ public class EnemyWithKnife : BaseEnemy
     {
         if (transform.position.x > player.transform.position.x)
         {
-            transform.position -= new Vector3(speed, 0, 0);
+            transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
         else if (transform.position.x < player.transform.position.x)
         {
-            transform.position += new Vector3(speed, 0, 0);
+            transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         anim.SetBool("Run", true);
@@ -99,7 +99,7 @@ public class EnemyWithKnife : BaseEnemy
                     istrigger = true;
                     break;
                 }
-                //istrigger = false;
+                istrigger = false;
             }
         }
     }

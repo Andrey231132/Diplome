@@ -178,7 +178,7 @@ MonoBehaviour:
   player: {fileID: 0}
   turretgun: {fileID: 3516388861286144994}
   aim: {fileID: 3516388861334290466}
-  bulletspeed: 0.5
+  bulletspeed: 10
 --- !u!82 &660714469629356241
 AudioSource:
   m_ObjectHideFlags: 0

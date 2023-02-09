@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private float jumpforce;//PLAYER JUMP FORCE
     [SerializeField]
     private float bulletspeed;//THIS SPEED FOR PLAYER BULLET
-   [SerializeField]
+    [SerializeField]
     private int health;//PLAYER HEALTH
     [SerializeField]
     private Transform aim;//PLACE WHERE SPAWN BULLET, WHEN PLAYER SHOOT
