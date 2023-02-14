@@ -42,7 +42,10 @@ public class Enemy1 : BaseEnemy
     private void Shoot()
     {
         GameObject _bullet = Instantiate(bullet, aim.position, Quaternion.identity);
-        _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
+        if (transform.eulerAngles.y == 0)
+        { _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed); }
+        else if(transform.eulerAngles.y == 180)
+        { _bullet.GetComponent<Bullet>().SetBulletSpeed(-bulletspeed); }
     }
     private void CheckTriggerPlace()
     {

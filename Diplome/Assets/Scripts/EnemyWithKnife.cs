@@ -86,6 +86,10 @@ public class EnemyWithKnife : BaseEnemy
             isnear = true;
             StartCoroutine(Punch());
         }
+        else
+        {
+            isnear = false;
+        }
     }
     private void CreateTriggerPlayer()
     {
@@ -109,6 +113,7 @@ public class EnemyWithKnife : BaseEnemy
         {
             player.gameObject.GetComponent<PlayerController>().GetDamage(damage);
             yield return new WaitForSeconds(timeBetweenPunch);
+            isdamage = false;
         }
     }
     private void OnDrawGizmos()
