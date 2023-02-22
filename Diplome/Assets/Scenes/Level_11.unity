@@ -1264,7 +1264,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
       propertyPath: bulletspeed
-      value: 0.5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7867077783576253509, guid: fadc6aceee5f3e648b960be87eca66d1, type: 3}
       propertyPath: slider_health

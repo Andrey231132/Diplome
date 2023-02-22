@@ -110,9 +110,14 @@ public class PlayerController : MonoBehaviour
             Destroy(_bullet, 3f);
         }
     }
-    private void OnCollisionEnter2D()
+    private void OnCollisionEnter2D(Collision2D col)
     {
         isgroundstay = true;
+        if(col.gameObject.name == "money")
+        {
+            Money.getmoney(1);
+            Destroy(col.gameObject);
+        }
     }
     private void OnCollisionExit2D()
     {
