@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get;private set;}
+    private static int moneys;
+    public static void GetMoney(int coins)
+    {
+        moneys += coins;
+    }
     private void Awake()
     {
         if(!Instance)
