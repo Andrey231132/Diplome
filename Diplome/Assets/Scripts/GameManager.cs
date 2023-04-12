@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {get;private set;}
     private static int moneys;
+
+    public static float size=1f;
+    public static float timerecord;
+    public static float damage;
     public static void GetMoney(int coins)
     {
         moneys += coins;

@@ -37,10 +37,15 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private bool isgroundstay;
     private bool Iscanshoot  = true;
+    void Awake()
+    {
+        GameManager.timerecord = reloadtime;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+
     }
     void Update()
     {
@@ -48,6 +53,8 @@ public class PlayerController : MonoBehaviour
         UpdateSlider();
         CheckHealth();
         CheckValueBullet();
+        transform.localScale = new Vector2(GameManager.size, GameManager.size);
+        reloadtime = GameManager.timerecord;
     }
     private void UpdateSlider()
     {
