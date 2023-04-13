@@ -9,4 +9,8 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void SetScene(int number)
+    {
+        SceneManager.LoadScene(number);
+    }
 }
