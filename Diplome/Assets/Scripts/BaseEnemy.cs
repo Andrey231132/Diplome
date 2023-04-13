@@ -7,6 +7,7 @@ public abstract class BaseEnemy : MonoBehaviour
     public int health;
     public float speed;
     public GameObject bullet;
+    public GameObject money;
     public float speedfire;
     public float speedbulet;
     public GameObject partical;
@@ -27,6 +28,7 @@ public abstract class BaseEnemy : MonoBehaviour
         audio = GetComponent<AudioSource>();
         health -= damage;
         Instantiate(partical, transform.position, Quaternion.identity);
+        Instantiate(money, transform.position, Quaternion.identity);
         audio.Play();
     }
     private void OnCollisionEnter2D(Collision2D col)

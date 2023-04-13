@@ -201,6 +201,7 @@ MonoBehaviour:
   health: 2
   speed: 2
   bullet: {fileID: 0}
+  money: {fileID: 6277764282109895357, guid: cfa0b3008ee2bf848b395041bfa40e76, type: 3}
   speedfire: 0
   speedbulet: 0
   partical: {fileID: 4289083040815615368, guid: 942299a4ee18bc14fb669b49f2e8a567, type: 3}
