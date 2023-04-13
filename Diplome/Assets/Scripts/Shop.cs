@@ -6,10 +6,26 @@ public class Shop : MonoBehaviour
 {
     public void Timerecord()
     {
-        GameManager.timerecord -= 0.1f;
+        if (GameManager.Money() > 0)
+        {
+            GameManager.timerecord -= 0.1f;
+            GameManager.Buy(1);
+        }
     }
     public void Size()
     {
-        GameManager.size += 0.1f;
+        if (GameManager.Money() > 0)
+        {
+            GameManager.size += 0.1f;
+            GameManager.Buy(1);
+        }
+    }
+    public void Damage()
+    {
+        if (GameManager.Money() > 0)
+        {
+            GameManager.damage += 1;
+            GameManager.Buy(1);
+        }
     }
 }

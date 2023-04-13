@@ -10,10 +10,18 @@ public class GameManager : MonoBehaviour
 
     public static float size=1f;
     public static float timerecord;
-    public static float damage;
+    public static int damage;
     public static void GetMoney(int coins)
     {
         moneys += coins;
+    }
+    public static void Buy(int price)
+    {
+        moneys-=price;
+    }
+    public static int Money()
+    {
+        return moneys;
     }
     private void Awake()
     {

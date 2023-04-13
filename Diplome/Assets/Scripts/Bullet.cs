@@ -34,5 +34,6 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         BulletMove();
+        damage = GameManager.damage;
     }
 }
