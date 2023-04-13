@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     }
     public static void NextLevel()
     {
+        PlayerPrefs.SetInt("currentlevel", SceneManager.GetActiveScene().buildIndex+1);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
     public static void ReloadLevel()
