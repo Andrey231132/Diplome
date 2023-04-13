@@ -120,7 +120,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D col)
     {
         isgroundstay = true;
-        if(col.gameObject.name == "money")
+        if(col.gameObject.name == "money" ||col.gameObject.name == "money(Clone)")
         {
             GameManager.GetMoney(1);
             Destroy(col.gameObject);

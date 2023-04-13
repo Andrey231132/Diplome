@@ -18,7 +18,7 @@ public class Shop : MonoBehaviour
     {
         if (GameManager.Money() > 0)
         {
-            GameManager.size += 0.1f;
+            GameManager.size += 0.05f;
             GameManager.Buy(1);
         }
     }
