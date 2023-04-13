@@ -35,7 +35,10 @@ public abstract class BaseEnemy : MonoBehaviour
     {
         if(col.gameObject.GetComponent<Bullet>())
         {
-            GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
+            if(col.gameObject.name != "enemubullet" && col.gameObject.name != "enemybullet(Clone)")
+            {
+                GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
+            }
         }
     }
     public abstract void Die();

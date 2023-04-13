@@ -22,7 +22,10 @@ public class Bullet : MonoBehaviour
     {
         if (col.gameObject.GetComponent<PlayerController>())
         {
-            col.gameObject.GetComponent<PlayerController>().GetDamage(damage);
+            if(gameObject.name != "playerbullet" && gameObject.name != "playerbullet(Clone)")
+            {
+                col.gameObject.GetComponent<PlayerController>().GetDamage(damage);
+            }
         }
         Instantiate(particlecollision, transform.position, Quaternion.identity);
         Destroy(gameObject);
@@ -34,6 +37,9 @@ public class Bullet : MonoBehaviour
     private void Update()
     {
         BulletMove();
-        damage = GameManager.damage;
+        if (gameObject.name == "playerbullet")
+        {
+            damage = GameManager.damage;
+        }
     }
 }
