@@ -18,4 +18,8 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(PlayerPrefs.GetInt("currentlevel"));
     }
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }
