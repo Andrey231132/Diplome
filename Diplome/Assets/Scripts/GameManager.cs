@@ -9,8 +9,8 @@ public class GameManager : MonoBehaviour
     private static int moneys;
 
     public static float size=1f;
-    public static float timerecord;
-    public static int damage;
+    public static float timerecord=1;
+    public static int damage=1;
     public static void GetMoney(int coins)
     {
         moneys += coins;
