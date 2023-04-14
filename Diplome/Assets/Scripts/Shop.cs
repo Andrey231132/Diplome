@@ -14,11 +14,11 @@ public class Shop : MonoBehaviour
             GameManager.Buy(1);
         }
     }
-    public void Size()
+    public void Speed()
     {
         if (GameManager.Money() > 0)
         {
-            GameManager.size += 0.05f;
+            GameManager.speed += 0.05f;
             GameManager.Buy(1);
         }
     }

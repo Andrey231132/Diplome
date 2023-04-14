@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         UpdateSlider();
         CheckHealth();
         CheckValueBullet();
-        transform.localScale = new Vector2(GameManager.size, GameManager.size);
+        playerspeed = GameManager.speed;
         reloadtime = GameManager.timerecord;
         //Debug.Log(GameManager.Money());
     }
