@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>(); 
     }
     void Update()
     {
@@ -103,8 +103,8 @@ public class PlayerController : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        Instantiate(particle, transform.position, Quaternion.identity);
         health -= damage;
+        Instantiate(particle, transform.position, Quaternion.identity);
     }
     private void Shoot()
     {   

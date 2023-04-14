@@ -7,31 +7,21 @@ public class Trap : MonoBehaviour
     [SerializeField]
     private float timebetweendamage;
     [SerializeField]
-    private int damage;
+    private int damage=1;
 
     private bool isactive;
-    private IEnumerator SetDamage(GameObject player)
-    {
-        while(isactive)
-        {
-            player.GetComponent<PlayerController>().GetDamage(damage);
-            yield return new WaitForSeconds(timebetweendamage);
-        }
-        yield return null;
-    }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject && col.gameObject.GetComponent<PlayerController>())
+        if (col.gameObject.GetComponent<PlayerController>() && !isactive)
         {
-            isactive = true;
-            StartCoroutine(SetDamage(col.gameObject));
+            StartCoroutine(Damager(col.gameObject.GetComponent<PlayerController>()));
         }
     }
-    private void OnCollisionExit2D(Collision2D col)
+    private IEnumerator Damager(PlayerController player)
     {
-        if (col.gameObject && col.gameObject.GetComponent<PlayerController>())
-        {
-            isactive = false;
-        }
+        isactive = true;
+        player.GetDamage(damage);
+        yield return new WaitForSeconds(timebetweendamage);
+        isactive = false;
     }
 }
