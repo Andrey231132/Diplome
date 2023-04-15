@@ -45,7 +45,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>(); 
+        anim = GetComponent<Animator>();
+        SetAudio();
     }
     void Update()
     {
@@ -56,6 +57,12 @@ public class PlayerController : MonoBehaviour
         playerspeed = GameManager.speed;
         reloadtime = GameManager.timerecord;
         //Debug.Log(GameManager.Money());
+    }
+    private void SetAudio()
+    {
+        playersoundrun.volume = PlayerPrefs.GetFloat("musicvalue");
+        playersoundjump.volume = PlayerPrefs.GetFloat("musicvalue");
+        playersoundshoot.volume = PlayerPrefs.GetFloat("musicvalue");
     }
     private void UpdateSlider()
     {

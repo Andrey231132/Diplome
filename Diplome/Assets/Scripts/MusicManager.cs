@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MusicManager : MonoBehaviour { 
    
     [SerializeField]
+    private Slider musicslider;
     private AudioSource music;
     private void Awake()
     {
-    
-        //Debug.Log(music);
+        music = GameObject.Find("GameManager").GetComponent< AudioSource >();
+        musicslider.value = PlayerPrefs.GetFloat("musicvalue");
     }
-    public void MuteOnMusic()
+    private void Update()
     {
-        if(music.mute)
-        {
-            music.mute = false;
-        }
-        else
-        {
-            music.mute = true;
-        }
+        CheckMusicSlider();
+        music.volume = PlayerPrefs.GetFloat("musicvalue");
+    }
+    public void CheckMusicSlider()
+    {
+        PlayerPrefs.SetFloat("musicvalue",musicslider.value);
     }
 }

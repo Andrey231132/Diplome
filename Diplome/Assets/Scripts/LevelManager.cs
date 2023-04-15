@@ -14,6 +14,10 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(number);
     }
+    public void EraseAllProgress()
+    {
+        PlayerPrefs.SetInt("currentlevel",0);
+    }
     public void ContinueButton()
     {
         SceneManager.LoadScene(PlayerPrefs.GetInt("currentlevel"));

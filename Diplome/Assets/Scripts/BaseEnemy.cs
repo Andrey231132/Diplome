@@ -12,9 +12,9 @@ public abstract class BaseEnemy : MonoBehaviour
     public float speedbulet;
     public GameObject partical;
     private AudioSource audio;
-    private void Start()
+    private void Awake()
     {
-        Debug.Log(audio);
+        SetAudio();
     }
     protected void CheckHealth()
     {
@@ -40,6 +40,11 @@ public abstract class BaseEnemy : MonoBehaviour
                 GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
             }
         }
+    }
+    private void SetAudio()
+    {
+        audio = GetComponent<AudioSource>();
+        audio.volume = PlayerPrefs.GetFloat("musicvalue");
     }
     public abstract void Die();
 }
