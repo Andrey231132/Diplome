@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  speed: 0.08
+  speed: 0.05
   bullet: {fileID: 7677515311216049462, guid: 56ee748ace39c31488550b2ac9741a9d, type: 3}
   money: {fileID: 6277764282109895357, guid: cfa0b3008ee2bf848b395041bfa40e76, type: 3}
   speedfire: 0

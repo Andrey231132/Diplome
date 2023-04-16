@@ -20,6 +20,9 @@ public class EnemyWithGun : BaseEnemy
     private Animator anim;
     private bool decectplayer;
     private bool isgoingleft;
+    private Transform player;
+    private bool shoot;
+    private AudioSource audio;
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -31,50 +34,59 @@ public class EnemyWithGun : BaseEnemy
         CheckPlayer();
         CheckHealth();
     }
-    private bool isactive;
     private void CheckDetectPlayer()
     {
         if(decectplayer)
         {
-            StopCoroutine(Patrule());
-            isactive = false;
+            Atack();
+            if(shoot == false)
+            {
+                StartCoroutine(Shooting());
+                shoot = true;
+            }
         }
-        else if(!isactive && !decectplayer)
+        else
         {
-            StartCoroutine(Patrule());
-            isactive = true;
+            Patrule();
         }
     }
-    private IEnumerator Patrule()
+    private void Atack()
     {
-        while(!decectplayer)
+        if (player.position.x > transform.position.x)
         {
-            if(isgoingleft)
+            transform.position += new Vector3(speed, 0, 0);
+        }
+        else
+        {
+            transform.position -= new Vector3(speed, 0, 0);
+        }
+    }
+    private void Patrule()
+    {
+        if (isgoingleft)
+        {
+            if (transform.position.x >= lefttrigger.transform.position.x)
             {
-                if (transform.position.x >= lefttrigger.transform.position.x)
-                {
-                    transform.position -= new Vector3(speed, 0, 0);
-                    transform.eulerAngles = new Vector3(0, 180, 0);
-                }
-                else
-                {
-                    isgoingleft = false;
-                }
-            } 
+                transform.position -= new Vector3(speed, 0, 0);
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
             else
             {
-
-                if (transform.position.x <= righttrigger.transform.position.x)
-                {
-                    transform.position += new Vector3(speed, 0, 0);
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                }
-                else
-                {
-                    isgoingleft = true;
-                }
+                isgoingleft = false;
             }
-            yield return null;
+        }
+        else
+        {
+
+            if (transform.position.x <= righttrigger.transform.position.x)
+            {
+                transform.position += new Vector3(speed, 0, 0);
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+            else
+            {
+                isgoingleft = true;
+            }
         }
     }
     private void CheckPlayer()
@@ -85,8 +97,19 @@ public class EnemyWithGun : BaseEnemy
             if (hit.collider.gameObject.GetComponent<PlayerController>())
             {
                 decectplayer = true;
+                player = hit.collider.gameObject.GetComponent<Transform>();
+            }
+            else
+            {
+                decectplayer = false;
             }
         }
+    }
+    private IEnumerator Shooting()
+    {
+        Shoot();
+        yield return new WaitForSeconds(speedfire);
+        shoot = false;
     }
     private void Shoot()
     {
@@ -95,6 +118,22 @@ public class EnemyWithGun : BaseEnemy
         { _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed); }
         else if (transform.eulerAngles.y == 180)
         { _bullet.GetComponent<Bullet>().SetBulletSpeed(-bulletspeed); }
+    }
+    public override void GetDamage(int damage)
+    {
+        audio = GetComponent<AudioSource>();
+        health -= damage;
+        Instantiate(partical, transform.position, Quaternion.identity);
+        Instantiate(money, transform.position, Quaternion.identity);
+        audio.Play();
+        if(isgoingleft == true)
+        {
+            isgoingleft = false;
+        }
+        else
+        {
+            isgoingleft = true;
+        }
     }
     public override void Die()
     {
