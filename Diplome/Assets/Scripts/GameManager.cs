@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-    private void Start()
+    private void Update()
     {
-        
+        //Debug.Log(moneys);
     }
 }

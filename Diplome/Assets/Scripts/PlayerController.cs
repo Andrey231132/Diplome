@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private bool isgroundstay;
     private bool Iscanshoot  = true;
+    private int moneysonlevel;
     void Awake()
     {
         GameManager.timerecord = reloadtime;
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
         isgroundstay = true;
         if(col.gameObject.name == "money" ||col.gameObject.name == "money(Clone)")
         {
+            moneysonlevel++;
             GameManager.GetMoney(1);
             Destroy(col.gameObject);
         }
@@ -165,6 +167,7 @@ public class PlayerController : MonoBehaviour
     {
         if(health <=0)
         {
+            GameManager.GetMoney(-moneysonlevel);
             GameManager.ReloadLevel();
         }
     }

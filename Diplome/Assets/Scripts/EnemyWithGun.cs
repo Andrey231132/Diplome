@@ -16,6 +16,8 @@ public class EnemyWithGun : BaseEnemy
     private float bulletspeed;//SPEED BULLET
     [SerializeField]
     private Transform raycastplace;
+    [SerializeField]
+    private float distancetorunplayer;
 
     private Animator anim;
     private bool decectplayer;
@@ -52,13 +54,16 @@ public class EnemyWithGun : BaseEnemy
     }
     private void Atack()
     {
-        if (player.position.x > transform.position.x)
+        if (Vector2.Distance(player.position, transform.position) != distancetorunplayer)
         {
-            transform.position += new Vector3(speed, 0, 0);
-        }
-        else
-        {
-            transform.position -= new Vector3(speed, 0, 0);
+            if (player.position.x > transform.position.x)
+            {
+                transform.position += new Vector3(speed, 0, 0);
+            }
+            else
+            {
+                transform.position -= new Vector3(speed, 0, 0);
+            }
         }
     }
     private void Patrule()
@@ -101,7 +106,7 @@ public class EnemyWithGun : BaseEnemy
             }
             else
             {
-                decectplayer = false;
+                decectplayer = false;;
             }
         }
     }
