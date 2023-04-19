@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class BaseEnemy : MonoBehaviour
-{
+{ 
+    [SerializeField]
+    private Element element;
+
     public int health;
     public float speed;
     public GameObject bullet;
@@ -38,6 +41,10 @@ public abstract class BaseEnemy : MonoBehaviour
             if(col.gameObject.name != "enemubullet" && col.gameObject.name != "enemybullet(Clone)")
             {
                 GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
+                if (col.gameObject.GetComponent<Bullet>().GetElement() == element)
+                {
+                    GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
+                }
             }
         }
     }

@@ -134,6 +134,10 @@ public class PlayerController : MonoBehaviour
             GameManager.GetMoney(1);
             Destroy(col.gameObject);
         }
+        if(col.gameObject.name == "Shrine")
+        {
+            bullet.GetComponent<Bullet>().SetElement(col.gameObject.GetComponent<Shrine1>().GetElement());
+        }
     }
     private void OnCollisionExit2D()
     {

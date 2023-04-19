@@ -8,11 +8,20 @@ public class Bullet : MonoBehaviour
     private GameObject particlecollision;//THIS IS PARTICLE,THEY SPAWN WHEN BULLET TOUCH ANYTHING
     [SerializeField]
     private int damage;//THIS IS BULLET DAMAGE
-   
+
+    private Element element; 
     private float bulletspeed;//THIS IS BULLET SPEED.
     public void SetBulletSpeed(float speed)
     {
         bulletspeed = speed;
+    }
+    public Element GetElement()
+    {
+        return element;
+    }
+    public void SetElement(Element element_)
+    {
+        element = element_;
     }
     public int GetDamage()
     {

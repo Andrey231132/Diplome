@@ -15,8 +15,12 @@ public class Shrine1 : MonoBehaviour
     {
         gameObject_element.GetComponent<SpriteRenderer>().sprite = sprite_element;
     }
+    public Element GetElement()
+    {
+        return element;
+    }
 }
-enum Element
+public enum Element
 {
     Grass,
     Fire,
