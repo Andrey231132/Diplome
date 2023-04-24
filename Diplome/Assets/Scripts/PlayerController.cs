@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private bool isgroundstay;
     private bool Iscanshoot  = true;
     private int moneysonlevel;
+    private Element playerelement;
     void Awake()
     {
         GameManager.timerecord = reloadtime;
@@ -120,6 +121,7 @@ public class PlayerController : MonoBehaviour
         {
             GameObject _bullet = Instantiate(bullet, aim.position, aim.rotation);
             _bullet.GetComponent<Bullet>().SetBulletSpeed(bulletspeed);
+            _bullet.GetComponent<Bullet>().SetElement(playerelement);
             bulletshoot++;
             playersoundshoot.Play();
             Destroy(_bullet, 3f);
@@ -134,9 +136,12 @@ public class PlayerController : MonoBehaviour
             GameManager.GetMoney(1);
             Destroy(col.gameObject);
         }
-        if(col.gameObject.name == "Shrine")
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.name == "Shrine")
         {
-            bullet.GetComponent<Bullet>().SetElement(col.gameObject.GetComponent<Shrine1>().GetElement());
+            playerelement = col.gameObject.GetComponent<Shrine1>().GetElement();
         }
     }
     private void OnCollisionExit2D()
