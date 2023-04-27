@@ -294,7 +294,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 88037739748960748, guid: dfd9e978289e28c48a73cc6a85fb1c7c, type: 3}
       propertyPath: m_Name
-      value: shrine
+      value: Shrine
       objectReference: {fileID: 0}
     - target: {fileID: 3641334171064182965, guid: dfd9e978289e28c48a73cc6a85fb1c7c, type: 3}
       propertyPath: m_RootOrder
@@ -2496,7 +2496,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728515241}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0

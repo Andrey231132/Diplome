@@ -31,15 +31,17 @@ public class PlayerController : MonoBehaviour
     private AudioSource playersoundjump;//JUST PLAYER SOUND -  JUMP
     [SerializeField]
     private AudioSource playersoundshoot;//JUST PLAYER SOUND -  SHOOT
-
+    [SerializeField]
+    private LayerMask Ground;
 
     private Rigidbody2D rb;
     private int bulletshoot; //THAT VALUE CURRENT SHOOT BULLET
     private Animator anim;
-    private bool isgroundstay;
+    //private bool isgroundstay;
     private bool Iscanshoot  = true;
     private int moneysonlevel;
     private Element playerelement;
+    private CapsuleCollider2D coll;
     void Awake()
     {
         GameManager.timerecord = reloadtime;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        coll = GetComponent<CapsuleCollider2D>();
         SetAudio();
     }
     void Update()
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
         if(x!=0)
         {
             anim.SetBool("Run", true);
-            if(isgroundstay)
+            if(isgroundstay())
             {
                 playersoundrun.mute = false;
             }
@@ -129,7 +132,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        isgroundstay = true;
+        isgroundstay();
         if(col.gameObject.name == "money" ||col.gameObject.name == "money(Clone)")
         {
             moneysonlevel++;
@@ -143,14 +146,6 @@ public class PlayerController : MonoBehaviour
         {
             playerelement = col.gameObject.GetComponent<Shrine1>().GetElement();
         }
-    }
-    private void OnCollisionExit2D()
-    {
-        isgroundstay = false;
-    }
-    private void OnCollisionStay2D()
-    {
-        isgroundstay = true;
     }
     private bool IsJump()
     {
@@ -193,5 +188,13 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(reloadtime);
         Iscanshoot = true;
+    }
+    private bool isgroundstay()
+    {
+        return Physics2D.OverlapCircle(coll.bounds.center, coll.bounds.size.x, Ground);
+    }
+    private void OnDrawGizmos()
+    {
+       Gizmos.DrawWireSphere(transform.position, GetComponent<Collider2D>().bounds.size.x);
     }
 }

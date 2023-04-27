@@ -134,6 +134,9 @@ MonoBehaviour:
   playersoundrun: {fileID: 2864985301911558162}
   playersoundjump: {fileID: 5273274192781706607}
   playersoundshoot: {fileID: 2281213548429422804}
+  Ground:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!50 &7867077783576253515
 Rigidbody2D:
   serializedVersion: 4
