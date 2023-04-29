@@ -191,10 +191,12 @@ public class PlayerController : MonoBehaviour
     }
     private bool isgroundstay()
     {
-        return Physics2D.OverlapCircle(coll.bounds.center, coll.bounds.size.x, Ground);
+        var collider = GetComponent<Collider2D>();
+        return Physics2D.OverlapCircle(collider.bounds.center, collider.bounds.size.x);
     }
     private void OnDrawGizmos()
     {
-       Gizmos.DrawWireSphere(transform.position, GetComponent<Collider2D>().bounds.size.x);
+        var collider = GetComponent<Collider2D>();
+        Gizmos.DrawWireSphere(collider.bounds.center, collider.bounds.size.x);
     }
 }
