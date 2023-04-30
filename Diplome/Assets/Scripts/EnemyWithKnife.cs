@@ -11,6 +11,8 @@ public class EnemyWithKnife : BaseEnemy
     [SerializeField]
     private Transform lefttrigger;
     [SerializeField]
+    private Transform raycastplace;
+    [SerializeField]
     private Transform player;
     [SerializeField]
     private int damage;
@@ -93,18 +95,14 @@ public class EnemyWithKnife : BaseEnemy
     }
     private void CreateTriggerPlayer()
     {
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, transform.right, seeradius);
-        foreach (RaycastHit2D hit in hits)
+        RaycastHit2D hit = Physics2D.Raycast(raycastplace.position, transform.right, seeradius);
+        if (hit && hit.collider.gameObject.GetComponent<PlayerController>() || hit && hit.collider.gameObject.GetComponent<shild1>())
         {
-            if (hit)
-            {
-                if (hit.collider.gameObject.GetComponent<PlayerController>())
-                {
-                    istrigger = true;
-                    break;
-                }
-                istrigger = false;
-            }
+            istrigger = true;
+        }
+        else
+        {
+            istrigger = false;
         }
     }
     private IEnumerator Punch()
