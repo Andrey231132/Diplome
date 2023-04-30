@@ -109,6 +109,10 @@ public class EnemyWithGun : BaseEnemy
                 decectplayer = false;;
             }
         }
+        if(player = null)
+        {
+            decectplayer = false;
+        }
     }
     private IEnumerator Shooting()
     {
