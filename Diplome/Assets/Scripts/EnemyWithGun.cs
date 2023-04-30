@@ -54,7 +54,7 @@ public class EnemyWithGun : BaseEnemy
     }
     private void Atack()
     {
-        if (Vector2.Distance(player.position, transform.position) != distancetorunplayer)
+        if (player && Vector2.Distance(player.position, transform.position) != distancetorunplayer)
         {
             if (player.position.x > transform.position.x)
             {
