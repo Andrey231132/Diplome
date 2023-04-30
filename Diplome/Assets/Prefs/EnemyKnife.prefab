@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 0
-  health: 2
+  health: 3
   speed: 2
   bullet: {fileID: 0}
   money: {fileID: 6277764282109895357, guid: cfa0b3008ee2bf848b395041bfa40e76, type: 3}

@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.name == "Shrine")
+        if (col.gameObject.GetComponent<Shrine1>())
         {
             playerelement = col.gameObject.GetComponent<Shrine1>().GetElement();
         }
