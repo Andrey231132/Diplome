@@ -57,7 +57,7 @@ public class Turret : BaseEnemy
     {
         direction = player.position - transform.position;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + new Vector3(distanceX, distanceY, 0), direction, seeradius);
-        if (hit && hit.collider.gameObject.GetComponent<PlayerController>())
+        if (hit && hit.collider.gameObject.GetComponent<PlayerController>() || hit && hit.collider.gameObject.GetComponent<shild1>())
         {
             turretgun.up = direction;
             isdetected = true;

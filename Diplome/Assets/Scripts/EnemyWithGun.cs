@@ -99,7 +99,7 @@ public class EnemyWithGun : BaseEnemy
         RaycastHit2D hit = Physics2D.Raycast(raycastplace.position, transform.right, seeradius);
         if (hit)
         {
-            if (hit.collider.gameObject.GetComponent<PlayerController>())
+            if (hit.collider.gameObject.GetComponent<PlayerController>() || hit.collider.gameObject.GetComponent<shild1>())
             {
                 decectplayer = true;
                 player = hit.collider.gameObject.GetComponent<Transform>();
