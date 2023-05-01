@@ -116,7 +116,7 @@ public class EnemyWithKnife : BaseEnemy
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position, transform.right * seeradius);
+        Gizmos.DrawRay(raycastplace.transform.position, transform.right * seeradius);
     }
     public override void Die()
     {
