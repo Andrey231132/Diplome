@@ -21,7 +21,7 @@ public class EnemyWithGun : BaseEnemy
 
     private Animator anim;
     private bool decectplayer;
-    private bool isgoingleft;
+    public bool isgoingleft;
     private Transform player;
     private bool shoot;
     private AudioSource audio;
@@ -149,7 +149,6 @@ public class EnemyWithGun : BaseEnemy
         Instantiate(partical, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
-
     private void OnDrawGizmos()
     {
         Gizmos.DrawRay(raycastplace.position, transform.right * seeradius);

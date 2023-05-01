@@ -46,6 +46,28 @@ public abstract class BaseEnemy : MonoBehaviour
                     GetDamage(col.gameObject.GetComponent<Bullet>().GetDamage());
                 }
             }
+            if (gameObject.GetComponent<EnemyWithGun>())
+            {
+                if (col.gameObject.transform.position.x > transform.position.x)
+                {
+                    gameObject.GetComponent<EnemyWithGun>().isgoingleft = false;
+                }
+                if(col.gameObject.transform.position.x < transform.position.x)
+                {
+                    gameObject.GetComponent<EnemyWithGun>().isgoingleft = true;
+                }
+            }
+            if (gameObject.GetComponent<EnemyWithKnife>())
+            {
+                if (col.gameObject.transform.position.x > transform.position.x)
+                {
+                    gameObject.GetComponent<EnemyWithKnife>().move = true;
+                }
+                if (col.gameObject.transform.position.x < transform.position.x)
+                {
+                    gameObject.GetComponent<EnemyWithKnife>().move = false;
+                }
+            }
         }
     }
     private void SetAudio()

@@ -22,7 +22,7 @@ public class EnemyWithKnife : BaseEnemy
     private float distancedamage;
 
     private bool istrigger;
-    private bool move;
+    public bool move;
     private bool isnear;
     private bool isdamage;
     private Animator anim;
