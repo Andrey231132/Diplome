@@ -215,7 +215,7 @@ MonoBehaviour:
   player: {fileID: 0}
   damage: 1
   timeBetweenPunch: 0.5
-  distancedamage: 2
+  distancedamage: 3
 --- !u!82 &3659272962842818879
 AudioSource:
   m_ObjectHideFlags: 0
