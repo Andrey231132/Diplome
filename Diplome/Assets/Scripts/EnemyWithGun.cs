@@ -58,11 +58,11 @@ public class EnemyWithGun : BaseEnemy
         {
             if (player.position.x > transform.position.x)
             {
-                transform.position += new Vector3(speed, 0, 0);
+                transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
             }
             else
             {
-                transform.position -= new Vector3(speed, 0, 0);
+                transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;
             }
         }
     }
@@ -72,7 +72,7 @@ public class EnemyWithGun : BaseEnemy
         {
             if (transform.position.x >= lefttrigger.transform.position.x)
             {
-                transform.position -= new Vector3(speed, 0, 0);
+                transform.position -= new Vector3(speed, 0, 0) * Time.deltaTime;
                 transform.eulerAngles = new Vector3(0, 180, 0);
             }
             else
@@ -85,7 +85,7 @@ public class EnemyWithGun : BaseEnemy
 
             if (transform.position.x <= righttrigger.transform.position.x)
             {
-                transform.position += new Vector3(speed, 0, 0);
+                transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
                 transform.eulerAngles = new Vector3(0, 0, 0);
             }
             else

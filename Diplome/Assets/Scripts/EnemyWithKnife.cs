@@ -53,7 +53,7 @@ public class EnemyWithKnife : BaseEnemy
         {
             transform.position += new Vector3(speed, 0, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 0, 0);
-            if(transform.position.x >= righttrigger.position.x)
+            if (transform.position.x >= righttrigger.position.x)
             {
                 move = false;
             }
@@ -113,6 +113,11 @@ public class EnemyWithKnife : BaseEnemy
             yield return new WaitForSeconds(timeBetweenPunch);
             isdamage = false;
         }
+    }
+    private IEnumerator Stay()
+    {
+        anim.SetBool("Run", false);
+        yield return new WaitForSeconds(1f);
     }
     private void OnDrawGizmos()
     {
