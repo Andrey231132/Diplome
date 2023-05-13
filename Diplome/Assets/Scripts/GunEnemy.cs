@@ -5,6 +5,9 @@ using UnityEngine;
 public class GunEnemy : MonoBehaviour
 {
     [SerializeField]
+    private StateEnemy _stateenemy;
+
+    [SerializeField]
     private Transform A_place;
     [SerializeField]
     private Transform B_place;
@@ -12,22 +15,23 @@ public class GunEnemy : MonoBehaviour
     private Transform _raycastplace;
 
     private Transform _currentplace;
+    private Transform _player;
 
     [SerializeField]
     private float _speed;
     [SerializeField]
+    private float _timebetwenshoot;
+    [SerializeField]
     private float _timestay;
     [SerializeField]
     private float _seeplayerdistance;
-
-    private bool IsFollow;
-    private bool IsPatrule=true;
-    private bool IsShoot;
-    private bool IsStay;
+    [SerializeField]
+    private float _atackplayerdistance;
 
     private Animator anim;
 
     //ƒополнителтьное_помогающее
+    private bool Isdetectplayer;
     private void Start()
     {
         _currentplace = A_place;
@@ -35,86 +39,149 @@ public class GunEnemy : MonoBehaviour
     }
     private void Update()
     {
-        if(IsPatrule)
-        {
-            StartCoroutine(Patruling());
-        }
-        if (IsStay)
-        {
-            StartCoroutine(Staying());
-        }
-        if(CheckPlayer())//≈сли метод возращает true враг начинает преследовать.ћетод провер€ет рейкаст.
-        {
-            IsPatrule = false;
-            IsStay = false;
-            IsFollow = true;
-        }
+        Logic();
+        CheckEnemyState();
     }
-    private bool CheckPlayer()
+    private void Logic()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_raycastplace.position, transform.right, _seeplayerdistance);
-        if (hit)
+        if(CheckPlayer())
         {
-            if (hit.collider.gameObject.GetComponent<PlayerController>() || hit.collider.gameObject.GetComponent<shild1>())
-            {
-                Debug.Log("Player");
-                return true;
-            }
-            else
-            {
-                Debug.Log("No Player");
-                return false;
-            }
+            _stateenemy = StateEnemy.Follow;
         }
-        return false;
-    }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(_raycastplace.position, transform.right * -_seeplayerdistance);
-    }
-    private IEnumerator Patruling()
-    {
-        if (gameObject.transform.position.x >= _currentplace.position.x)
+        else if(Isdetectplayer)//≈сли мы видели игрока,но он скрылс€ из ввиду
         {
-            transform.position -= new Vector3(_speed, 0, 0) * Time.deltaTime;
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            _stateenemy = StateEnemy.Stay;
         }
-        if (gameObject.transform.position.x <= _currentplace.position.x)
+        else if(_stateenemy != StateEnemy.Stay)
         {
-            transform.position += new Vector3(_speed, 0, 0) * Time.deltaTime;
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            _stateenemy = StateEnemy.Patrule;
         }
-        if (Mathf.Abs(_currentplace.position.x - gameObject.transform.position.x) <= 1f)//≈сли дистанци€ между точкой и врагом меньше или равно числу то смени точку
-        {
+        if(CheckPlayer() && Vector2.Distance(new Vector2(_player.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= _atackplayerdistance)
+        {//≈сли враг видет игрока и рассто€ние между ними равно расто€ние атаки то враг атакует
+            _stateenemy = StateEnemy.Shoot;
+        }
+        if(_stateenemy == StateEnemy.Patrule && Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.5f)
+        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку
+            _stateenemy = StateEnemy.Stay;
             if (_currentplace == A_place)
             {
                 _currentplace = B_place;
-                IsStay = true;
-                IsPatrule = false;
             }
             else if (_currentplace == B_place)
             {
                 _currentplace = A_place;
-                IsStay = true;
-                IsPatrule = false;
             }
         }
-        anim.SetBool("Run", true);
-        yield return null;
     }
-    private IEnumerator Following()
+    private void CheckEnemyState()
     {
-        yield return null;
+        switch(_stateenemy)
+        {
+            case StateEnemy.Follow:
+            {
+                    Following();
+                    StopCoroutine(Staying());
+                    StopCoroutine(Shooting());
+                    break;
+            }
+            case StateEnemy.Stay:
+            {
+                    StartCoroutine(Staying());
+                    break;
+            }
+            case StateEnemy.Shoot:
+            {
+                    StartCoroutine(Shooting());
+                    StopCoroutine(Staying());
+                    break;
+            }
+            case StateEnemy.Patrule:
+            {
+                    StopCoroutine(Shooting());
+                    StopCoroutine(Staying());
+                    Patruling();
+                    break;
+            }
+        }
+    }
+    private bool CheckPlayer()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(_raycastplace.position,transform.right,_seeplayerdistance);
+        if (hit)
+        {
+            if (hit.collider.gameObject.GetComponent<PlayerController>() || hit.collider.gameObject.GetComponent<shild1>())
+            {
+                Isdetectplayer = true;
+                _player = hit.collider.gameObject.transform;
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
+        }
+        return false;
+    }     
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(_raycastplace.position, transform.right * _seeplayerdistance);
+    }
+    private void Patruling()
+    {
+        if(transform.position.x > _currentplace.position.x)
+        {
+            transform.position -= new Vector3(_speed,0) * Time.deltaTime;
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        if (transform.position.x < _currentplace.position.x)
+        {
+            transform.position += new Vector3(_speed, 0) * Time.deltaTime;
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        anim.SetBool("Run", true);
+    }
+    private void Following()
+    {
+        if(_player && Vector2.Distance(_player.position, gameObject.transform.position) > _atackplayerdistance)
+        {
+            if (gameObject.transform.position.x >= _player.position.x)
+            {
+                transform.position -= new Vector3(_speed, 0, 0) * Time.deltaTime;
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            if (gameObject.transform.position.x <= _player.position.x)
+            {
+                transform.position += new Vector3(_speed, 0, 0) * Time.deltaTime;
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+        }
     }
     private IEnumerator Staying()
     {
         anim.SetBool("Run",false);
         yield return new WaitForSeconds(_timestay);
-        IsPatrule = true;
-        IsStay = false;
+        Isdetectplayer = false;
+        _stateenemy = StateEnemy.Patrule;
     }
     private IEnumerator Shooting()
     {
-        yield return null;
+        if (gameObject.transform.position.x >= _player.position.x)
+        {
+            transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+        if (gameObject.transform.position.x <= _player.position.x)
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+        anim.SetBool("Run", false);
+        yield return new WaitForSeconds(_timebetwenshoot);
+        
     }
+}
+public enum StateEnemy
+{
+    Follow,
+    Stay,
+    Shoot,
+    Patrule
 }
