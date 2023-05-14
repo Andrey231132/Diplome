@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
         if(x!=0)
         {
             anim.SetBool("Run", true);
-            if(isgroundstay())
+            if(IsJump())
             {
                 playersoundrun.mute = false;
             }
@@ -132,7 +132,6 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D col)
     {
-        isgroundstay();
         if(col.gameObject.name == "money" ||col.gameObject.name == "money(Clone)")
         {
             moneysonlevel++;
@@ -152,12 +151,16 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0,1f,0), -Vector2.up, 0.1f);
         if(hit)
         {
-            return true;
+            if (hit.collider.tag == "Ground")
+            {
+                return true;
+            }
         }
         else
         {
             return false;
         }
+        return false;
     }
     public GameObject GetBullet()
     {
@@ -188,11 +191,6 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(reloadtime);
         Iscanshoot = true;
-    }
-    private bool isgroundstay()
-    {
-        var collider = GetComponent<Collider2D>();
-        return Physics2D.OverlapCircle(collider.bounds.center, collider.bounds.size.x);
     }
     private void OnDrawGizmos()
     {
