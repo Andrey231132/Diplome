@@ -47,6 +47,7 @@ public class GunEnemy : MonoBehaviour
 
     //ƒополнителтьное_помогающее
     private bool Isdetectplayer;
+    private bool Ischangeplacepatrule;
     private void Start()
     {
         _currentplace = A_place;
@@ -61,18 +62,19 @@ public class GunEnemy : MonoBehaviour
         Logic();
         CheckEnemyState();
         CheckHealth();
+        Debug.Log(_currentplace);
     }
     private void Logic()
     {
         if (CheckPlayer())
-        {
+        {//≈сли мы видим игрока,но он вне зоны нашей атаки
             _stateenemy = StateEnemy.Follow;
         }
         else if (Isdetectplayer)//≈сли мы видели игрока,но он скрылс€ из ввиду
         {
             _stateenemy = StateEnemy.Stay;
         }
-        else if (_stateenemy != StateEnemy.Stay)
+        if(!Isdetectplayer && _stateenemy != StateEnemy.Stay)
         {
             _stateenemy = StateEnemy.Patrule;
         }
@@ -80,17 +82,16 @@ public class GunEnemy : MonoBehaviour
         {//≈сли враг видет игрока и рассто€ние между ними равно расто€ние атаки то враг атакует
             _stateenemy = StateEnemy.Shoot;
         }
-        if (_stateenemy == StateEnemy.Patrule && Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.5f)
-        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку
-            _stateenemy = StateEnemy.Stay;
-            if (_currentplace == A_place)
-            {
-                _currentplace = B_place;
-            }
-            else if (_currentplace == B_place)
-            {
-                _currentplace = A_place;
-            }
+    }
+    private void ChangePlacePatrule()
+    {
+        if (_currentplace == A_place)
+        {
+            _currentplace = B_place;
+        }
+        else if (_currentplace == B_place)
+        {
+            _currentplace = A_place;
         }
     }
     private void CheckEnemyState()
@@ -158,6 +159,12 @@ public class GunEnemy : MonoBehaviour
             transform.position += new Vector3(_speed, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
+        if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f)
+        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку
+            _stateenemy = StateEnemy.Stay;
+            ChangePlacePatrule();
+            Debug.Log("");
+        }
         anim.SetBool("Run", true);
     }
     private void Following()
@@ -180,8 +187,8 @@ public class GunEnemy : MonoBehaviour
     {
         anim.SetBool("Run", false);
         yield return new WaitForSeconds(_timestay);
-        Isdetectplayer = false;
         _stateenemy = StateEnemy.Patrule;
+        Isdetectplayer = false;
     }
     private IEnumerator Shooting()
     {

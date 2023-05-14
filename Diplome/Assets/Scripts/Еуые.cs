@@ -4,78 +4,110 @@ using UnityEngine;
 
 public class Еуые : MonoBehaviour
 {
-    public Transform point1;
-    public Transform point2;
-    public float patrolSpeed = 1f;
-    public float waitTime = 3f;
-    public float chaseSpeed = 2f;
-    public float chaseDistance = 4f;
-    public float attackDistance = 1f;
-    public float chaseTime = 5f;
+    public float moveSpeed;
+    public float waitTime;
+    public float patrolRange;
+    public float attackRange;
+    public float attackCooldown;
+    public float idleTime;
 
-    private Transform target;
-    private bool chasing = false;
-    private float chaseStartTime;
+    private int currentTargetIndex;
+    private Vector3[] patrolPoints;
+    private GameObject player;
+    private bool isAttacking;
+    private float attackTimer;
+    private bool isIdle;
+    private float idleTimer;
 
     void Start()
     {
-        target = GameObject.Find("Player").transform;
-        StartCoroutine(Patrol());
-    }
+        // Назначаем патрульные точки
+        patrolPoints = new Vector3[2];
+        patrolPoints[0] = transform.position;
+        patrolPoints[1] = new Vector3(transform.position.x + patrolRange, transform.position.y, transform.position.z);
 
-    IEnumerator Patrol()
-    {
-        while (true)
-        {
-            yield return StartCoroutine(MoveToTarget(point1.position, point2.position, patrolSpeed));
-            yield return new WaitForSeconds(waitTime);
-            yield return StartCoroutine(MoveToTarget(point2.position, point1.position, patrolSpeed));
-            yield return new WaitForSeconds(waitTime);
-        }
-    }
-
-    IEnumerator MoveToTarget(Vector3 start, Vector3 end, float speed)
-    {
-        float startTime = Time.time;
-        float journeyLength = Vector3.Distance(start, end);
-
-        while (transform.position != end)
-        {
-            float distCovered = (Time.time - startTime) * speed;
-            float fracJourney = distCovered / journeyLength;
-            transform.position = Vector3.Lerp(start, end, fracJourney);
-            yield return null;
-        }
+        currentTargetIndex = 1;
+        player = GameObject.FindGameObjectWithTag("Player");
+        isAttacking = false;
+        attackTimer = 0;
+        isIdle = false;
+        idleTimer = 0;
     }
 
     void Update()
     {
-        if (chasing)
+        if (!isAttacking)
         {
-            if (target != null)
+            // Двигаемся к текущей патрульной точке
+            transform.position = Vector3.MoveTowards(transform.position, patrolPoints[currentTargetIndex], moveSpeed * Time.deltaTime);
+
+            // Если достигли точки, ждем N секунд и меняем цель
+            if (transform.position == patrolPoints[currentTargetIndex])
             {
-                transform.position = Vector3.MoveTowards(transform.position, target.position, chaseSpeed * Time.deltaTime);
-                if (Vector3.Distance(transform.position, target.position) <= attackDistance)
+                isIdle = true;
+                idleTimer += Time.deltaTime;
+                if (idleTimer >= waitTime)
                 {
-                    // Attack the player
-                }
-                else if (Time.time - chaseStartTime >= chaseTime)
-                {
-                    chasing = false;
-                    StartCoroutine(Patrol());
+                    isIdle = false;
+                    idleTimer = 0;
+                    if (currentTargetIndex == 0)
+                    {
+                        currentTargetIndex = 1;
+                    }
+                    else
+                    {
+                        currentTargetIndex = 0;
+                    }
                 }
             }
+
+            // Если игрок близко, начинаем преследование
+            if (Vector3.Distance(transform.position, player.transform.position) <= attackRange)
+            {
+                isAttacking = true;
+            }
+        }
+        else
+        {
+            // Двигаемся к игроку
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, moveSpeed * Time.deltaTime);
+
+            // Если достигли игрока, начинаем атаку
+            if (Vector3.Distance(transform.position, player.transform.position) <= attackRange)
+            {
+                if (attackTimer <= 0)
+                {
+                    // При необходимости, здесь можно добавить код атаки
+                    attackTimer = attackCooldown;
+                }
+                else
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+            }
+            // Если игрок убежал, попытаемся его найти снова или переходим в айдл
             else
             {
-                chasing = false;
-                StartCoroutine(Patrol());
+                if (Vector3.Distance(transform.position, player.transform.position) > attackRange * 2)
+                {
+                    isAttacking = false;
+                    isIdle = true;
+                    idleTimer = 0;
+                }
             }
         }
-        else if (target != null && Vector3.Distance(transform.position, target.position) <= chaseDistance)
+
+        // Если в режиме айдл, ждем N секунд
+        if (isIdle)
         {
-            chasing = true;
-            chaseStartTime = Time.time;
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleTime)
+            {
+                isIdle = false;
+                idleTimer = 0;
+            }
         }
     }
-
 }
+
+
