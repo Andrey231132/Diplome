@@ -62,21 +62,25 @@ public class GunEnemy : MonoBehaviour
         Logic();
         CheckEnemyState();
         CheckHealth();
-        Debug.Log(_currentplace);
+        Debug.Log(_stateenemy);
     }
     private void Logic()
     {
-        if (CheckPlayer())
-        {//≈сли мы видим игрока,но он вне зоны нашей атаки
+        if(CheckPlayer())
+        {
             _stateenemy = StateEnemy.Follow;
         }
         else if (Isdetectplayer)//≈сли мы видели игрока,но он скрылс€ из ввиду
         {
             _stateenemy = StateEnemy.Stay;
         }
-        if(!Isdetectplayer && _stateenemy != StateEnemy.Stay)
+        if (!Isdetectplayer && _stateenemy != StateEnemy.Stay)
         {
             _stateenemy = StateEnemy.Patrule;
+        }
+        if(_stateenemy == StateEnemy.Follow && !CheckPlayer() && Isdetectplayer)
+        {
+            _stateenemy = StateEnemy.Stay;
         }
         if (CheckPlayer() && Vector2.Distance(new Vector2(_player.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= _atackplayerdistance)
         {//≈сли враг видет игрока и рассто€ние между ними равно расто€ние атаки то враг атакует
@@ -101,7 +105,7 @@ public class GunEnemy : MonoBehaviour
             case StateEnemy.Follow:
                 {
                     Following();
-                    StopCoroutine(Staying());
+                    //StopCoroutine(Staying());
                     StopCoroutine(Shooting());
                     break;
                 }
@@ -113,13 +117,13 @@ public class GunEnemy : MonoBehaviour
             case StateEnemy.Shoot:
                 {
                     StartCoroutine(Shooting());
-                    StopCoroutine(Staying());
+                    //StartCoroutine(Staying());
                     break;
                 }
             case StateEnemy.Patrule:
                 {
                     StopCoroutine(Shooting());
-                    StopCoroutine(Staying());
+                    //StopCoroutine(Staying());
                     Patruling();
                     break;
                 }
