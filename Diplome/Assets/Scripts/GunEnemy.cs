@@ -47,7 +47,7 @@ public class GunEnemy : MonoBehaviour
 
     //Дополнителтьное_помогающее
     private bool Isdetectplayer;
-    private bool Ischangeplacepatrule;
+    private bool IsShoot;
     private void Start()
     {
         _currentplace = A_place;
@@ -62,29 +62,29 @@ public class GunEnemy : MonoBehaviour
         Logic();
         CheckEnemyState();
         CheckHealth();
-        Debug.Log(_stateenemy);
     }
     private void Logic()
     {
-        if(CheckPlayer())
+        if(CheckPlayer() && Isdetectplayer && _stateenemy != StateEnemy.Shoot)
         {
             _stateenemy = StateEnemy.Follow;
         }
-        else if (Isdetectplayer)//Если мы видели игрока,но он скрылся из ввиду
+        if (!CheckPlayer() && Isdetectplayer)//Если мы видели игрока,но он скрылся из ввиду
         {
             _stateenemy = StateEnemy.Stay;
         }
-        if (!Isdetectplayer && _stateenemy != StateEnemy.Stay)
+        if (!CheckPlayer()  && !Isdetectplayer)
         {
             _stateenemy = StateEnemy.Patrule;
-        }
-        if(_stateenemy == StateEnemy.Follow && !CheckPlayer() && Isdetectplayer)
-        {
-            _stateenemy = StateEnemy.Stay;
         }
         if (CheckPlayer() && Vector2.Distance(new Vector2(_player.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= _atackplayerdistance)
         {//Если враг видет игрока и расстояние между ними равно растояние атаки то враг атакует
             _stateenemy = StateEnemy.Shoot;
+        }
+        if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f && _stateenemy == StateEnemy.Patrule)
+        {//Если враг патрилирует и если он дошел до точки то меняем ему точку
+            _stateenemy = StateEnemy.Stay;
+            ChangePlacePatrule();
         }
     }
     private void ChangePlacePatrule()
@@ -105,8 +105,6 @@ public class GunEnemy : MonoBehaviour
             case StateEnemy.Follow:
                 {
                     Following();
-                    //StopCoroutine(Staying());
-                    StopCoroutine(Shooting());
                     break;
                 }
             case StateEnemy.Stay:
@@ -117,13 +115,10 @@ public class GunEnemy : MonoBehaviour
             case StateEnemy.Shoot:
                 {
                     StartCoroutine(Shooting());
-                    //StartCoroutine(Staying());
                     break;
                 }
             case StateEnemy.Patrule:
                 {
-                    StopCoroutine(Shooting());
-                    //StopCoroutine(Staying());
                     Patruling();
                     break;
                 }
@@ -134,13 +129,14 @@ public class GunEnemy : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(_raycastplace.position, transform.right, _seeplayerdistance);
         if (hit)
         {
+            Debug.Log(hit.collider.name);
             if (hit.collider.gameObject.GetComponent<PlayerController>() || hit.collider.gameObject.GetComponent<shild1>())
             {
                 Isdetectplayer = true;
                 _player = hit.collider.gameObject.transform;
                 return true;
             }
-            else
+            else if(!hit.collider.gameObject.GetComponent<PlayerController>() || !hit.collider.gameObject.GetComponent<shild1>())
             {
                 return false;
             }
@@ -163,13 +159,11 @@ public class GunEnemy : MonoBehaviour
             transform.position += new Vector3(_speed, 0) * Time.deltaTime;
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
-        if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f)
+        anim.SetBool("Run", true);
+        if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f && _stateenemy == StateEnemy.Patrule)
         {//Если враг патрилирует и если он дошел до точки то меняем ему точку
             _stateenemy = StateEnemy.Stay;
-            ChangePlacePatrule();
-            Debug.Log("");
         }
-        anim.SetBool("Run", true);
     }
     private void Following()
     {
@@ -191,22 +185,26 @@ public class GunEnemy : MonoBehaviour
     {
         anim.SetBool("Run", false);
         yield return new WaitForSeconds(_timestay);
-        _stateenemy = StateEnemy.Patrule;
         Isdetectplayer = false;
     }
     private IEnumerator Shooting()
     {
-        if (gameObject.transform.position.x >= _player.position.x)
+        if(!IsShoot)
         {
-            transform.eulerAngles = new Vector3(0, 180, 0);
+            IsShoot = true;
+            if (gameObject.transform.position.x >= _player.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 180, 0);
+            }
+            if (gameObject.transform.position.x <= _player.position.x)
+            {
+                transform.eulerAngles = new Vector3(0, 0, 0);
+            }
+            anim.SetBool("Run", false);
+            SpawnBullet();
+            yield return new WaitForSeconds(_timebetwenshoot);
+            IsShoot = false;
         }
-        if (gameObject.transform.position.x <= _player.position.x)
-        {
-            transform.eulerAngles = new Vector3(0, 0, 0);
-        }
-        anim.SetBool("Run", false);
-        SpawnBullet();
-        yield return new WaitForSeconds(_timebetwenshoot);
     }
     private void SpawnBullet()
     {
