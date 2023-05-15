@@ -48,6 +48,7 @@ public class GunEnemy : MonoBehaviour
     //ƒополнителтьное_помогающее
     private bool Isdetectplayer;
     private bool IsShoot;
+    private bool checking;
     private void Start()
     {
         _currentplace = A_place;
@@ -66,15 +67,11 @@ public class GunEnemy : MonoBehaviour
     private void Logic()
     {
         if(CheckPlayer() && Isdetectplayer && _stateenemy != StateEnemy.Shoot)
-        {
+        {//≈сли враг видет игрока и видел его и враг не атакует то вра преследует
             _stateenemy = StateEnemy.Follow;
         }
-        if (!CheckPlayer() && Isdetectplayer)//≈сли мы видели игрока,но он скрылс€ из ввиду
-        {
-            _stateenemy = StateEnemy.Stay;
-        }
         if (!CheckPlayer()  && !Isdetectplayer)
-        {
+        {//≈сли враг не видет игрока и не видел его то патрулируем
             _stateenemy = StateEnemy.Patrule;
         }
         if (CheckPlayer() && Vector2.Distance(new Vector2(_player.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= _atackplayerdistance)
@@ -82,7 +79,7 @@ public class GunEnemy : MonoBehaviour
             _stateenemy = StateEnemy.Shoot;
         }
         if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f && _stateenemy == StateEnemy.Patrule)
-        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку
+        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку и начинает стро€ть
             _stateenemy = StateEnemy.Stay;
             ChangePlacePatrule();
         }
@@ -160,10 +157,6 @@ public class GunEnemy : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0, 0);
         }
         anim.SetBool("Run", true);
-        if (Vector2.Distance(new Vector2(_currentplace.position.x, 0), new Vector2(gameObject.transform.position.x, 0)) <= 0.1f && _stateenemy == StateEnemy.Patrule)
-        {//≈сли враг патрилирует и если он дошел до точки то мен€ем ему точку
-            _stateenemy = StateEnemy.Stay;
-        }
     }
     private void Following()
     {
